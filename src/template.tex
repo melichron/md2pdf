@@ -1,0 +1,139 @@
+\documentclass[oneside,final,14pt]{extreport}
+\usepackage{extsizes}
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{mathtext}
+\usepackage{multirow}
+\usepackage{listings}
+\usepackage{ucs}
+\usepackage{hhline}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{setspace}
+\usepackage[center,it,labelsep=period]{caption}
+\usepackage[english,russian,ukrainian]{babel}
+\usepackage{tempora}
+\usepackage{vmargin}
+\newcommand{\specialcell}[2][c]{%
+  \begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+\setpapersize{A4}
+\setmarginsrb {1cm}{1cm}{1cm}{1cm}{0pt}{0mm}{0pt}{13mm} % {leftmargin}{topmargin}{rightmargin}{bottommargin}
+\usepackage{indentfirst}
+\setlength\parindent{1cm}
+\renewcommand{\baselinestretch}{0.8}
+\renewcommand\thechapter{}
+\renewcommand\thesection{}
+\renewcommand\thesubsection{}
+\renewcommand\thesubsubsection{}
+\titleformat
+{\chapter} % command
+{\bfseries\normalsize\centering} % format
+{\thechapter} % label
+{0.5ex} % sep
+{
+    \centering
+}
+[
+\vspace{-1.5ex}
+] % after-code
+\titleformat
+{\section}
+[block]
+{\normalfont\bfseries}
+{\thesection}{0.5em}{}
+\sloppy
+\let\oldenumerate\enumerate
+\renewcommand{\enumerate}{
+  \oldenumerate
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+\let\olditemize\itemize
+\renewcommand{\itemize}{
+  \olditemize
+  \setlength{\itemsep}{1pt}
+  \setlength{\parskip}{0pt}
+  \setlength{\parsep}{0pt}
+}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\titlespacing{\subsubsection}{\parindent}{3mm}{3mm}
+\titlespacing{\subsection}{\parindent}{3mm}{3mm}
+\usepackage{color}
+
+\lstset{
+    basicstyle=\small\ttfamily,
+    inputencoding=utf8,
+    extendedchars=\true,
+    showspaces=false,
+    keepspaces=true
+    showstringspaces=false,
+    showtabs=false,
+    tabsize=4,
+    captionpos=b,
+    breaklines=true,
+    breakatwhitespace=true,
+    breakautoindent=true,
+    linewidth=\textwidth
+}
+
+\begin{document}
+$if(title)$
+\maketitle
+$endif$
+$if(abstract)$
+\begin{abstract}
+$abstract$
+\end{abstract}
+$endif$
+
+$for(include-before)$
+$include-before$
+
+$endfor$
+$if(toc)$
+{
+$if(colorlinks)$
+\hypersetup{linkcolor=$if(toccolor)$$toccolor$$else$black$endif$}
+$endif$
+\setcounter{tocdepth}{$toc-depth$}
+\tableofcontents
+}
+$endif$
+$if(lot)$
+\listoftables
+$endif$
+$if(lof)$
+\listoffigures
+$endif$
+$body$
+
+$if(natbib)$
+$if(bibliography)$
+$if(biblio-title)$
+$if(book-class)$
+\renewcommand\bibname{$biblio-title$}
+$else$
+\renewcommand\refname{$biblio-title$}
+$endif$
+$endif$
+\bibliography{$for(bibliography)$$bibliography$$sep$,$endfor$}
+
+$endif$
+$endif$
+$if(biblatex)$
+\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+
+$endif$
+$for(include-after)$
+$include-after$
+
+$endfor$
+\end{document}
